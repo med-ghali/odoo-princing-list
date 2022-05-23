@@ -2,7 +2,7 @@
   <div class="card p-0 m-2 " @click="focus" :class="{outsideBorder:active}">
         <div class="inner-div ">
         <div class="card-header text-center bg-primary p-3">
-            <h4  contenteditable="true" @dblclick="handleText">Beginner</h4>
+            <h4  contenteditable="true" @dblclick="handleText" style="min-height: 90px; line-height: 90px;">Beginner</h4>
         </div>
         <div class="card-body text-center p-0">
             <h1 class="bg-light mx-0 p-5" contenteditable="true" @dblclick="handleText">  $15 <small>/mo</small></h1>
