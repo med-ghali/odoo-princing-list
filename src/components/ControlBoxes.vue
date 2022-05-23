@@ -83,15 +83,12 @@ export default {
 }
 </script>
 
-<style >
+<style scoped>
 .parameters{
     display: flex;
     align-items: baseline;
 }
 
-.right *{
-    margin : 6px ;
-}
 button:not(:disabled), [type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled){
     font-size : 8px;
     border : none;
@@ -133,8 +130,7 @@ button:not(:disabled), [type=button]:not(:disabled), [type=reset]:not(:disabled)
   font-size : 8px;
     border : none;
     outline : none;
-    color : white;
-    background : #595964;
+
 }
 input[type=color].form-control {
     padding : 6px !important;

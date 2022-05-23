@@ -5,7 +5,7 @@
         <PrincingCard v-for="box in boxes" :key="box.id" @focus="handleFocus(box.id)" :active="box.active" @handleText="handleText"></PrincingCard>
       </div>
       <div  class="hide col-3 " style="overflow-y : auto;" >
-      <ControlBoxes></ControlBoxes>
+      <ControlBoxes @uploadImgBackground="uploadImgBackground" @changeBackground="changeBackground"></ControlBoxes>
         <ControlText v-if="showControlText" @changeWeight="changeWeight" @changetextColor="changetextColor" @changeTextSize="changeTextSize" @changeFontSize="changeFontSize"></ControlText>
       </div>
 
@@ -72,6 +72,14 @@ export default {
     changetextColor(clr){
        this.selectedText.style.color = clr ;
     },
+    uploadImgBackground(e){
+      const image = e.target.files[0] ;    
+      document.body.style.backgroundImage = 'url(' + window.URL.createObjectURL(image) + ')' ;
+      e.target.value = '' ;
+    },
+    changeBackground(color){
+      document.body.style.background = color
+    },
   },
     mounted(){
         document.body.addEventListener("click",(e)=>{
@@ -85,7 +93,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .col-3{
     position: fixed;
     width : 290px !important;
