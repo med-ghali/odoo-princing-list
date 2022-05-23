@@ -1,15 +1,15 @@
 <template>
 <div class="container m-0 p-0" ref="container" >
-    <b-row >
-      <b-col cols="9"  class="d-flex ms-5 mt-5" id="main">
+    <div class="row">
+      <div class="col-9 d-flex ms-5 mt-5" id="main">
         <PrincingCard class=""></PrincingCard>
         <PrincingCard class=""></PrincingCard>
         <PrincingCard class=""></PrincingCard>
-      </b-col>
-      <b-col cols="3"  class="hide p-0" style="overflow-y : auto;" >
+      </div>
+      <div  class="col-3 hide p-0" style="overflow-y : auto;" >
         <ControlText></ControlText>
-      </b-col>
-    </b-row>
+      </div>
+    </div>
 </div>
 </template>
 
