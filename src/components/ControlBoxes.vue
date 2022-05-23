@@ -61,7 +61,6 @@
 
 <script>
 export default {
-
     methods: {
         addCard () {
             this.$emit('addCard') ;
@@ -88,7 +87,9 @@ export default {
     display: flex;
     align-items: baseline;
 }
-
+.right *{
+    margin : 6px ;
+}
 button:not(:disabled), [type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled){
     font-size : 8px;
     border : none;
@@ -98,7 +99,6 @@ button:not(:disabled), [type=button]:not(:disabled), [type=reset]:not(:disabled)
     border : 1px solid black;
     padding : .3em 1.2em;
     margin : .3em 0;
-
 }
 .btn-check:focus + .btn-secondary, .btn-secondary:focus{
     background: #3b3b43 !important;
@@ -116,8 +116,6 @@ button:not(:disabled), [type=button]:not(:disabled), [type=reset]:not(:disabled)
     color : rgba(255, 255, 255, 0.897);
     font-size: 12px;
 }
-
-
 .btn-group > .btn, .btn-group-vertical > .btn{
     font-size : 8px;
     border : none;
@@ -130,7 +128,6 @@ button:not(:disabled), [type=button]:not(:disabled), [type=reset]:not(:disabled)
   font-size : 8px;
     border : none;
     outline : none;
-
 }
 input[type=color].form-control {
     padding : 6px !important;
@@ -140,10 +137,8 @@ input[type=color].form-control {
 }
 .btns{
         justify-content : space-between;
-
 }
 .image-upload>input {
   display: none;
 }
-
 </style>
