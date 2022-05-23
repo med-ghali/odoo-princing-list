@@ -1,36 +1,101 @@
 <template>
-<div class="container m-0 p-0" ref="container" >
-    <div class="row">
-      <div class="col-9 d-flex ms-5 mt-5 justify-content-center align-items-center" id="main">
-        <PrincingCard class=""></PrincingCard>
+<div class="container-fluid m-0 p-0 d-flex " ref="container" >
 
+      <div class=" d-flex justify-content-center align-items-center pricing-cards" id="main" >
+        <PrincingCard v-for="box in boxes" :key="box.id" @focus="handleFocus(box.id)" :active="box.active" @handleText="handleText"></PrincingCard>
       </div>
-      <div  class="col-3 hide p-0" style="overflow-y : auto;" >
-        <ControlText></ControlText>
+      <div  class="hide col-3 " style="overflow-y : auto;" >
+      <ControlBoxes></ControlBoxes>
+        <ControlText v-if="showControlText" @changeWeight="changeWeight" @changetextColor="changetextColor" @changeTextSize="changeTextSize" @changeFontSize="changeFontSize"></ControlText>
       </div>
-    </div>
+
 </div>
 </template>
 
 <script>
 import PrincingCard from './components/princingCard.vue';
 import ControlText from './components/ControlText.vue';
+import ControlBoxes from './components/ControlBoxes.vue';
 
 export default {
   name: 'App',
   components: {
     PrincingCard,
-    ControlText
-}
+    ControlText,
+    ControlBoxes
+},
+  data(){
+    return {
+        focusOn : null,
+        counter : 3,
+        selectedText : null,
+        showControlText : false,
+      boxes : [
+        { id : 0 ,active : false},
+        { id : 1,active : false},
+        {id : 2,active : false},
+      ]
+    }
+  },
+  
+  methods : {
+    handleActiveBox(id){
+        this.boxes.map(box=>{
+           if(box.id === id) box.active = true
+          else box.active = false
+        })
+
+    },
+    handleFocus(id){
+        this.focusOn = id
+        this.handleActiveBox(id)
+
+    },
+    handleText(target){
+      this.showControlText = true ;
+      this.selectedText = target
+    },
+    changeTextSize(cls){
+      this.selectedText.style.fontSize = ''
+      this.selectedText.className = '';
+      if ( cls !== 'n')
+      this.selectedText.classList.add(cls);
+      console.log(this.selectedText.classList)
+
+    },
+    changeFontSize(fs){
+       this.selectedText.style.fontSize = fs ;
+    },
+    changeWeight(cls){
+       this.selectedText.classList.toggle(cls)
+    },
+    changetextColor(clr){
+       this.selectedText.style.color = clr ;
+    },
+  },
+    mounted(){
+        document.body.addEventListener("click",(e)=>{
+          if(e.altKey){
+            this.handleFocus(null)
+            this.showControlText = null
+            
+          }
+        })
+    },
 }
 </script>
 
 <style>
 .col-3{
     position: fixed;
-    max-width : 290px !important;
+    width : 290px !important;
     right: 0;
     height: 100vh;
     background : #3e3e46;
+}
+.pricing-cards{
+  width: calc(100% - 290px);
+  padding: 1em;
+  padding-top : 2em;
 }
 </style>
