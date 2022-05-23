@@ -1,11 +1,11 @@
 <template>
 <div class="container-fluid m-0 p-0 d-flex " ref="container" >
 
-      <div class=" d-flex justify-content-center align-items-center pricing-cards" id="main" >
-        <PrincingCard v-for="box in boxes" :key="box.id" @focus="handleFocus(box.id)" :active="box.active" @handleText="handleText"></PrincingCard>
+      <div class=" d-flex flex-wrap-reverse justify-content-center align-items-center pricing-cards" id="main" >
+        <PrincingCard v-for="box in boxes" :key="box.id" @focus="handleFocus(box.id)" :active="box.active" @handleText="handleText" ></PrincingCard>
       </div>
       <div  class="hide col-3 " style="overflow-y : auto;" >
-      <ControlBoxes @uploadImgBackground="uploadImgBackground" @changeBackground="changeBackground"></ControlBoxes>
+      <ControlBoxes @ListNum="ListNum" @uploadImgBackground="uploadImgBackground" @changeBackground="changeBackground"></ControlBoxes>
         <ControlText v-if="showControlText" @changeWeight="changeWeight" @changetextColor="changetextColor" @changeTextSize="changeTextSize" @changeFontSize="changeFontSize"></ControlText>
       </div>
 
@@ -80,6 +80,16 @@ export default {
     changeBackground(color){
       document.body.style.background = color
     },
+    ListNum(num){
+      while (num !== this.boxes.length){
+        if (num > this.boxes.length)
+        {
+          this.boxes.push( { id : this.counter ,active : false} )
+        }else{
+          this.boxes.pop()
+        }
+      }
+    }
   },
     mounted(){
         document.body.addEventListener("click",(e)=>{

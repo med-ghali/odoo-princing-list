@@ -12,13 +12,13 @@
     Dropdown button
   </button>
   <ul class="dropdown-menu " aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" href="#"  >None</a></li>
-            <li><a class="dropdown-item" href="#" >&nbsp;1 </a></li>
-            <li><a class="dropdown-item" href="#" >&nbsp;2 </a></li>
-            <li><a class="dropdown-item" href="#" >&nbsp;3 </a></li>
-            <li><a class="dropdown-item" href="#" >&nbsp;4 </a></li>
-            <li><a class="dropdown-item" href="#" >&nbsp;5 </a></li>
-            <li><a class="dropdown-item" href="#" >&nbsp;6 </a></li>
+            <li><a class="dropdown-item" href="#" @click="ListNum(0)"  >None</a></li>
+            <li><a class="dropdown-item" href="#"  @click="ListNum(1)" >&nbsp;1 </a></li>
+            <li><a class="dropdown-item" href="#" @click="ListNum(2)">&nbsp;2 </a></li>
+            <li><a class="dropdown-item" href="#" @click="ListNum(3)">&nbsp;3 </a></li>
+            <li><a class="dropdown-item" href="#" @click="ListNum(4)">&nbsp;4 </a></li>
+            <li><a class="dropdown-item" href="#" @click="ListNum(5)">&nbsp;5 </a></li>
+            <li><a class="dropdown-item" href="#" @click="ListNum(6)">&nbsp;6 </a></li>
   </ul>
 </div>
 
@@ -78,6 +78,9 @@ export default {
         uploadImg(e){
              this.$emit('uploadImgBackground',e)
         },
+        ListNum(num){
+            this.$emit('ListNum',num)
+        }
     }
 }
 </script>
