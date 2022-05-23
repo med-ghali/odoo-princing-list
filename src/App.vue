@@ -1,7 +1,7 @@
 <template>
 <div class="container-fluid m-0 p-0 d-flex " ref="container" >
 
-      <div class=" d-flex flex-wrap-reverse justify-content-center align-items-center pricing-cards" id="main" >
+      <div class="ma d-flex justify-content-center align-items-center pricing-cards" id="main" >
         <PrincingCard v-for="box in boxes" :key="box.id" @focus="handleFocus(box.id)" :active="box.active" @handleText="handleText" ></PrincingCard>
       </div>
       <div  class="hide col-3 " style="overflow-y : auto;" >
@@ -112,8 +112,27 @@ export default {
     background : #3e3e46;
 }
 .pricing-cards{
-  width: calc(100% - 290px);
   padding: 1em;
   padding-top : 2em;
+}
+@media only screen and (max-width: 970px) {
+  .pricing-cards {
+    flex-wrap : wrap;
+  }
+  .hide 
+  {
+    display: none;
+  }
+  #main{
+    margin:auto
+  }
+  .pricing-cards{
+    width: 100% ;
+  }
+}
+@media only screen and (min-width: 970px) {
+  .pricing-cards{
+    width: calc(100% - 290px);
+  }
 }
 </style>
