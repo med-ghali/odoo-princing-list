@@ -7,9 +7,9 @@
             
             <div class="row g-0 p-0  d-flex align-items-baseline">
                 <p class="parameter-label col-6 ps-3 " >Columns</p>
-                    <div class="dropdown ps-3 col-6">
+                    <div class="dropdown ps-3 col-6 " style="transform: translate(-16px,0);">
   <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-    Dropdown button
+    {{columnNumber}}
   </button>
   <ul class="dropdown-menu " aria-labelledby="dropdownMenuButton1">
             <li><a class="dropdown-item" href="#" @click="ListNum(0)"  >None</a></li>
@@ -24,9 +24,9 @@
 
             </div>
 
-            <div class="row g-0 p-0 d-flex align-items-baseline ">
+            <div class="row g-0 p-0 d-flex align-items-baseline " >
                 <p class="parameter-label col-6 ps-3">Background</p>
-                <div class="d-flex  justify-content-between col-6 align-items-center">
+                <div class="d-flex  justify-content-between col-6 align-items-center" >
                     <div class="image-upload">
                         <label for="BackGroundFile">
 
@@ -61,6 +61,12 @@
 
 <script>
 export default {
+
+    data(){
+        return{
+            columnNumber : 3
+        }
+    },
     methods: {
         addCard () {
             this.$emit('addCard') ;
@@ -79,7 +85,9 @@ export default {
              this.$emit('uploadImgBackground',e)
         },
         ListNum(num){
+            this.columnNumber = num
             this.$emit('ListNum',num)
+
         }
     }
 }
@@ -90,9 +98,7 @@ export default {
     display: flex;
     align-items: baseline;
 }
-.right *{
-    margin : 6px ;
-}
+
 button:not(:disabled), [type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled){
     font-size : 8px;
     border : none;

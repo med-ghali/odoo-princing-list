@@ -1,11 +1,18 @@
 <template>
-<div class="container-fluid m-0 p-0 d-flex " ref="container" >
 
+<div class="container-fluid m-0 p-0 d-flex " ref="container" >
       <div class="ma d-flex justify-content-center align-items-center pricing-cards" id="main" >
-        <PrincingCard v-for="box in boxes" :key="box.id" @focus="handleFocus(box.id)" :active="box.active" @handleText="handleText" ></PrincingCard>
+          <div id="widthSelector" ref="widthSelector" class="w-100">
+        <PrincingCard v-for="box in boxes" :key="box.id" @focus="handleFocus(box.id)" :active="box.active" @handleText="handleText" >
+        <svg v-if="box.active" style="cursor:pointer;" @click="deleteBox" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-trash-fill position-absolute top-0 end-50" viewBox="0 0 16 16">
+  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+</svg>
+        </PrincingCard>
+      
       </div>
-      <div  class="hide col-3 " style="overflow-y : auto;" >
-      <ControlBoxes @ListNum="ListNum" @uploadImgBackground="uploadImgBackground" @changeBackground="changeBackground"></ControlBoxes>
+      </div>
+      <div  class="hide control " style="overflow-y : auto;" >
+      <ControlBoxes @changeCardWidth="changeCardWidth" @handleMouseLeave="handleMouseLeave"  @ListNum="ListNum" @uploadImgBackground="uploadImgBackground" @changeBackground="changeBackground"></ControlBoxes>
         <ControlText v-if="showControlText" @changeWeight="changeWeight" @changetextColor="changetextColor" @changeTextSize="changeTextSize" @changeFontSize="changeFontSize"></ControlText>
       </div>
 
@@ -30,6 +37,7 @@ export default {
         counter : 3,
         selectedText : null,
         showControlText : false,
+        previousClass : 'w-100',
       boxes : [
         { id : 0 ,active : false},
         { id : 1,active : false},
@@ -55,6 +63,38 @@ export default {
       this.showControlText = true ;
       this.selectedText = target
     },
+    changeCardWidth(width,e){
+      if(e.type === 'mouseenter'){
+          this.hover = true
+      if(width === 'small'){
+
+        this.$refs.widthSelector.className = '';
+        this.$refs.widthSelector.classList.add("w-50");
+      }
+      if(width === 'medium'){
+        this.$refs.widthSelector.className = '';
+        this.$refs.widthSelector.classList.add("w-75");
+
+      }
+      if(width === 'big'){
+        this.$refs.widthSelector.className = '';
+        this.$refs.widthSelector.classList.add('w-100')
+      }
+      }
+
+      else if (e.type == 'click') {
+        this.previousClass = this.$refs.widthSelector.className
+        this.hover = false
+      }
+      
+      },
+      handleMouseLeave(e){
+          if(this.hover){
+              this.$refs.widthSelector.className = '';
+              this.$refs.widthSelector.classList.add(this.previousClass)
+          }
+          this.hover = false
+      },
     changeTextSize(cls){
       this.selectedText.style.fontSize = ''
       this.selectedText.className = '';
@@ -80,11 +120,14 @@ export default {
     changeBackground(color){
       document.body.style.background = color
     },
+    deleteBox(){
+     this.boxes = this.boxes.filter(box => box.id != this.focusOn)
+    },
     ListNum(num){
       while (num !== this.boxes.length){
         if (num > this.boxes.length)
         {
-          this.boxes.push( { id : this.counter ,active : false} )
+          this.boxes.push( { id : this.counter++,active : false,isSet:true} )
         }else{
           this.boxes.pop()
         }
@@ -100,13 +143,14 @@ export default {
           }
         })
     },
+
 }
 </script>
 
 <style scoped>
-.col-3{
+.control{
+  width : 290px !important;
     position: fixed;
-    width : 290px !important;
     right: 0;
     height: 100vh;
     background : #3e3e46;
@@ -116,9 +160,9 @@ export default {
   padding-top : 2em;
 }
 @media only screen and (max-width: 970px) {
-  .pricing-cards {
+  #widthSelector {
     flex-wrap : wrap;
-  }
+     width : 70% !important;}
   .hide 
   {
     display: none;
@@ -129,6 +173,10 @@ export default {
   .pricing-cards{
     width: 100% ;
   }
+}
+#widthSelector{
+  display: flex;
+  justify-content: center;
 }
 @media only screen and (min-width: 970px) {
   .pricing-cards{
