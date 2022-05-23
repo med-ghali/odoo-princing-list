@@ -1,10 +1,9 @@
 <template>
 <div class="container m-0 p-0" ref="container" >
     <div class="row">
-      <div class="col-9 d-flex ms-5 mt-5" id="main">
+      <div class="col-9 d-flex ms-5 mt-5 justify-content-center align-items-center" id="main">
         <PrincingCard class=""></PrincingCard>
-        <PrincingCard class=""></PrincingCard>
-        <PrincingCard class=""></PrincingCard>
+
       </div>
       <div  class="col-3 hide p-0" style="overflow-y : auto;" >
         <ControlText></ControlText>
