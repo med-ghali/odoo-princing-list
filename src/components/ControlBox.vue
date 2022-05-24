@@ -5,16 +5,8 @@
 
 
         <div class="row g-0 p-0 d-flex align-items-baseline ">
-            <p class="parameter-label col-6 ps-3 ">Background</p>
-             <div class="dropdown ps-3 col-6 " >
-                    <button class="btn btn-secondary dropdown-toggle w-100" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        {{buttonSize}}</button>
-                    <ul class="dropdown-menu col-6" aria-labelledby="buttonSize">
-                        <li><a class="dropdown-item" href="#" @click="changeCardBackground('white')">White</a></li>
-                        <li><a class="dropdown-item" href="#"  @click="changeCardBackground('light gray')">Light Gray</a></li>
-                        <li><a class="dropdown-item" href="#" @click="changeCardBackground('dark gray')">Dark Gray</a></li>
-                    </ul>
-                </div>
+            <p class="parameter-label col-6 ps-3 ">Colors</p>
+    <input type="color" class="form-control form-control-color border-0 ms-4" id="exampleColorInput" value="#FFFFFF" @change="changeBoxBackground" style="background: #3e3e46;transform: translate(-33px, 6px);" title="Choose your color">
         </div>
         <div class="row g-0 p-0 d-flex align-items-baseline ">
             
@@ -147,11 +139,8 @@ export default {
         }
     },
     methods:{
-        changeCardOrder(a){
-            this.$emit('changeCardOrder',a);
-        },
-        changeCardBackground(a){
-            this.$emit('changeCardBackground',a)
+        changeBoxBackground(e){
+            this.$emit('changeBoxBackground',e.target.value)
         },
         handleCardButton(action){
             this.$emit('handleCardButton',action)

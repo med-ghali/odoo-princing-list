@@ -3,7 +3,7 @@
 <div class="container-fluid m-0 p-0 d-flex " ref="container" >
       <div class="ma d-flex justify-content-center align-items-center pricing-cards h-auto" id="main" ref="heightSelector">
           <div id="widthSelector" ref="widthSelector" class="w-100">
-        <PrincingCard v-for="box in boxes" :key="box.id" @focus="handleFocus(box.id)" :active="box.active" @handleText="handleText" :buttonSize="box.buttonSize" :buttonColor="box.buttonColor">
+        <PrincingCard v-for="box in boxes" :key="box.id" @focus="handleFocus($event,box.id)" :active="box.active" @handleText="handleText" :buttonSize="box.buttonSize" :buttonColor="box.buttonColor" :showButton="box.showButton">
         <svg v-if="box.active" style="cursor:pointer;" @click="deleteBox" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-trash-fill position-absolute top-0 end-50" viewBox="0 0 16 16">
   <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
 </svg>
@@ -13,7 +13,7 @@
       </div>
       <div  class="hide control " style="overflow-y : auto;" >
       <ControlBoxes @changeCardWidth="changeCardWidth" @handleMouseLeave="handleMouseLeave"  @ListNum="ListNum" @uploadImgBackground="uploadImgBackground" @changeBackground="changeBackground" @changeCardHeight="changeCardHeight" :length="boxes.length"></ControlBoxes>
-      <ControlBox v-if="focusOn != null" ></ControlBox>
+      <ControlBox v-if="focusOn != null" @changeBoxBackground="changeBoxBackground" @handleCardButton="handleCardButton" ></ControlBox>
       <ControlButton v-if="focusOn != null" @changeButtonSize="changeButtonSize"  @changeButtonColor="changeButtonColor" @toggleOutline="toggleOutline" />
       <ControlText v-if="showControlText" @changeWeight="changeWeight" @changetextColor="changetextColor" @changeTextSize="changeTextSize" @changeFontSize="changeFontSize"></ControlText>
       </div>
@@ -39,15 +39,19 @@ export default {
 },
   data(){
     return {
+        boxInfo : {
+          top : null,
+          bottom : null
+        },
         focusOn : null,
         counter : 3,
         selectedText : null,
         showControlText : false,
         previousClass : 'w-100',
       boxes : [
-        { id : 0 ,active : false,buttonSize : '', buttonColor : 'btn-dark'},
-        { id : 1,active : false, buttonSize : '' , buttonColor : 'btn-dark'},
-        {id : 2,active : false , buttonSize : ''  ,buttonColor : 'btn-dark'},
+        { id : 0 ,active : false,buttonSize : '', buttonColor : 'btn-dark', showButton : true},
+        { id : 1,active : false, buttonSize : '' , buttonColor : 'btn-dark',showButton : true},
+        {id : 2,active : false , buttonSize : ''  ,buttonColor : 'btn-dark',showButton : true},
       ] 
     }
   },
@@ -60,8 +64,9 @@ export default {
         })
 
     },
-    handleFocus(id){
+    handleFocus(info,id){
         this.focusOn = id
+        this.boxInfo = info
         this.handleActiveBox(id)
 
     },
@@ -167,6 +172,20 @@ export default {
             }
           }
         })  
+      },
+      changeBoxBackground(color){
+        this.boxInfo.top.style.backgroundColor = color
+        this.boxInfo.bottom.style.backgroundColor = color
+
+      },
+      handleCardButton(action){
+          this.boxes.map(box =>{
+          if(box.id == this.focusOn) {
+          if(action === 'del') box.showButton = false
+          else box.showButton = true
+          return
+        }
+      })
       },
     
   },

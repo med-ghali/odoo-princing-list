@@ -2,7 +2,7 @@
   <div class="card p-0 m-2 w-100 " @click="focus" :class="{outsideBorder:active}">
         <slot class="trash-icon"></slot>
         <div class="inner-div ">
-        <div class="card-header text-center bg-dark p-3">
+        <div class="card-header text-center  p-3" style="background : #212529" ref="top">
             <h4  contenteditable="true"  @dblclick="handleText" style="color : white;">Beginner</h4>
         </div>
         <div class="card-body text-center p-0">
@@ -14,9 +14,9 @@
                 <li class="list-group-item" contenteditable="true" @dblclick="handleText">A fourth item</li>
             </ul>
         </div>
-        <div class="card-footer text-muted text-center">
+        <div class="card-footer text-muted text-center" ref="bottom">
             <p contenteditable="true" @dblclick="handleText"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur, dicta!</p>
-            <button :class="[buttonSize,buttonColor]" class="btn"  @dblclick="handleText"> Lorem, ipsum.</button>
+            <button v-if="showButton" :class="[buttonSize,buttonColor]" class="btn"  @dblclick="handleText"> Lorem, ipsum.</button>
         </div>
         </div>
   </div>
@@ -24,12 +24,13 @@
 
 <script>
 export default {
-    props : ['active','buttonSize','buttonColor'],
+    props : ['active','buttonSize','buttonColor','showButton'],
     
     methods : {
 
         focus(){
-            this.$emit('focus')
+            this.$emit('focus',{top :this.$refs.top, bottom : this.$refs.bottom})
+            
         },
         handleText(e){
             this.$emit('handleText',e.target)
