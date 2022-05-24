@@ -16,7 +16,7 @@
         </div>
         <div class="card-footer text-muted text-center">
             <p contenteditable="true" @dblclick="handleText"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur, dicta!</p>
-            <button class="btn btn-dark "  @dblclick="handleText"> Lorem, ipsum.</button>
+            <button :class="[buttonSize,buttonColor]" class="btn"  @dblclick="handleText"> Lorem, ipsum.</button>
         </div>
         </div>
   </div>
@@ -24,7 +24,7 @@
 
 <script>
 export default {
-    props : ['active'],
+    props : ['active','buttonSize','buttonColor'],
     
     methods : {
 

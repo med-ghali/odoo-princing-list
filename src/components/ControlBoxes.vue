@@ -8,11 +8,11 @@
             <div class="row g-0 p-0  d-flex align-items-baseline">
                 <p class="parameter-label col-6 ps-3 " >Columns</p>
                     <div class="dropdown ps-3 col-6 " style="transform: translate(-16px,0);">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+  <button class="btn btn-secondary dropdown-toggle w-100" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
     {{columnNumber}}
   </button>
   <ul class="dropdown-menu " aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" :class="{bgdark:columnNumber===0}" href="#" @click="ListNum(0)"  >None</a></li>
+            <li><a class="dropdown-item " :class="{bgdark:columnNumber===0}"  href="#" @click="ListNum(0)"  >None</a></li>
             <li><a class="dropdown-item" :class="{bgdark:columnNumber===1}"  href="#"  @click="ListNum(1)" >&nbsp;1 </a></li>
             <li><a class="dropdown-item" :class="{bgdark:columnNumber===2}"  href="#" @click="ListNum(2)">&nbsp;2 </a></li>
             <li><a class="dropdown-item" :class="{bgdark:columnNumber===3}"  href="#" @click="ListNum(3)">&nbsp;3 </a></li>

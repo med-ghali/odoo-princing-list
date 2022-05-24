@@ -3,7 +3,7 @@
 <div class="container-fluid m-0 p-0 d-flex " ref="container" >
       <div class="ma d-flex justify-content-center align-items-center pricing-cards h-auto" id="main" ref="heightSelector">
           <div id="widthSelector" ref="widthSelector" class="w-100">
-        <PrincingCard v-for="box in boxes" :key="box.id" @focus="handleFocus(box.id)" :active="box.active" @handleText="handleText" >
+        <PrincingCard v-for="box in boxes" :key="box.id" @focus="handleFocus(box.id)" :active="box.active" @handleText="handleText" :buttonSize="box.buttonSize" :buttonColor="box.buttonColor">
         <svg v-if="box.active" style="cursor:pointer;" @click="deleteBox" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-trash-fill position-absolute top-0 end-50" viewBox="0 0 16 16">
   <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
 </svg>
@@ -13,7 +13,8 @@
       </div>
       <div  class="hide control " style="overflow-y : auto;" >
       <ControlBoxes @changeCardWidth="changeCardWidth" @handleMouseLeave="handleMouseLeave"  @ListNum="ListNum" @uploadImgBackground="uploadImgBackground" @changeBackground="changeBackground" @changeCardHeight="changeCardHeight" :length="boxes.length"></ControlBoxes>
-        <ControlText v-if="showControlText" @changeWeight="changeWeight" @changetextColor="changetextColor" @changeTextSize="changeTextSize" @changeFontSize="changeFontSize"></ControlText>
+      <ControlText v-if="showControlText" @changeWeight="changeWeight" @changetextColor="changetextColor" @changeTextSize="changeTextSize" @changeFontSize="changeFontSize"></ControlText>
+      <ControlButton v-if="focusOn != null" @changeButtonSize="changeButtonSize"  @changeButtonColor="changeButtonColor" @toggleOutline="toggleOutline" />
       </div>
 
 </div>
@@ -23,13 +24,15 @@
 import PrincingCard from './components/princingCard.vue';
 import ControlText from './components/ControlText.vue';
 import ControlBoxes from './components/ControlBoxes.vue';
+import ControlButton from './components/ControlButton.vue';
 
 export default {
   name: 'App',
   components: {
     PrincingCard,
     ControlText,
-    ControlBoxes
+    ControlBoxes,
+    ControlButton
 },
   data(){
     return {
@@ -39,10 +42,10 @@ export default {
         showControlText : false,
         previousClass : 'w-100',
       boxes : [
-        { id : 0 ,active : false},
-        { id : 1,active : false},
-        {id : 2,active : false},
-      ]
+        { id : 0 ,active : false,buttonSize : '', buttonColor : 'btn-dark'},
+        { id : 1,active : false, buttonSize : '' , buttonColor : 'btn-dark'},
+        {id : 2,active : false , buttonSize : ''  ,buttonColor : 'btn-dark'},
+      ] 
     }
   },
   
@@ -138,7 +141,31 @@ export default {
           this.boxes.pop()
         }
       }
-    }
+    },
+      changeButtonSize(size){
+        this.boxes.map(box =>{
+          if(box.id === this.focusOn) box.buttonSize = size ;
+        }) 
+      },
+      changeButtonColor(clr){
+        this.boxes.map(box =>{
+          if(box.id === this.focusOn) box.buttonColor = clr ;
+        })        
+      },
+      toggleOutline(){
+        this.boxes.map(box =>{
+          if(box.id === this.focusOn){
+            if (!box.buttonColor.includes('outline')){
+              const  newColor = 'btn-outline' + box.buttonColor.substring(3, box.buttonColor.length) ;
+              box.buttonColor = newColor ;
+            }else {
+              const newColor =  'btn-' + box.buttonColor.substring(12, box.buttonColor.length) ;
+              box.buttonColor = newColor ;
+            }
+          }
+        })  
+      },
+    
   },
     mounted(){
         document.body.addEventListener("click",(e)=>{
