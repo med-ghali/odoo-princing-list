@@ -13,8 +13,9 @@
       </div>
       <div  class="hide control " style="overflow-y : auto;" >
       <ControlBoxes @changeCardWidth="changeCardWidth" @handleMouseLeave="handleMouseLeave"  @ListNum="ListNum" @uploadImgBackground="uploadImgBackground" @changeBackground="changeBackground" @changeCardHeight="changeCardHeight" :length="boxes.length"></ControlBoxes>
-      <ControlText v-if="showControlText" @changeWeight="changeWeight" @changetextColor="changetextColor" @changeTextSize="changeTextSize" @changeFontSize="changeFontSize"></ControlText>
+      <ControlBox v-if="focusOn != null" ></ControlBox>
       <ControlButton v-if="focusOn != null" @changeButtonSize="changeButtonSize"  @changeButtonColor="changeButtonColor" @toggleOutline="toggleOutline" />
+      <ControlText v-if="showControlText" @changeWeight="changeWeight" @changetextColor="changetextColor" @changeTextSize="changeTextSize" @changeFontSize="changeFontSize"></ControlText>
       </div>
 
 </div>
@@ -24,6 +25,7 @@
 import PrincingCard from './components/princingCard.vue';
 import ControlText from './components/ControlText.vue';
 import ControlBoxes from './components/ControlBoxes.vue';
+import ControlBox from './components/ControlBox.vue';
 import ControlButton from './components/ControlButton.vue';
 
 export default {
@@ -32,7 +34,8 @@ export default {
     PrincingCard,
     ControlText,
     ControlBoxes,
-    ControlButton
+    ControlButton,
+    ControlBox
 },
   data(){
     return {

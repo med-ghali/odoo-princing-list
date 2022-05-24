@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid  p-0">
-            
+              <h4 class="parameter mx-0 ps-3">Button</h4>
             <div class="row g-0 p-0 d-flex align-items-baseline">
                 <p class="parameter-label col-6 ps-3 ">Button Size</p>
                 <div class="dropdown ps-3 col-6 " >
@@ -23,7 +23,7 @@
                         <li><a class="dropdown-item" href="#"  @click="changeButtonColor('Blue','btn-primary')">Blue</a></li>
                         <li><a class="dropdown-item" href="#" @click="changeButtonColor('Red','btn-danger')">Red </a></li>
                         <li><a class="dropdown-item" href="#" @click="changeButtonColor('Green','btn-success')">Green</a></li>
-                        <li><a class="dropdown-item" href="#" @click="changeButtonColor('Black','btn-dack')">Black</a></li>
+                        <li><a class="dropdown-item" href="#" @click="changeButtonColor('Black','btn-dark')">Black</a></li>
                         <li><a class="dropdown-item" href="#" @click="changeButtonColor('Light','btn-light')">Light</a></li>
                         <li><a class="dropdown-item" href="#" @click="changeButtonColor('Warning','btn-warning')">Warning</a></li>
                         <li><a class="dropdown-item" href="#" @click="changeButtonColor('Gray','btn-secondary')">Gray</a></li>
@@ -35,7 +35,7 @@
 
             <div class="row g-0 p-0   d-flex align-items-baseline">
                 <p class="parameter-label col-6 ps-3 " style="transform: translate(0,3px);">Outline button</p>
-                <button @click="toggleOutline" class="btn btn-sm col-6 p-1 m-0" >toggle Outline</button>
+                <button @click="toggleOutline" class="btn btn-sm col-6 p-1 m-0" style="width: 44%;transform: translate(16px, 0);" >toggle Outline</button>
             </div>
     </div>
 
@@ -78,7 +78,7 @@ export default {
 }
 
 button:not(:disabled), [type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled){
-    font-size : 8px;
+    font-size : 10px;
     border : none;
     outline : none;
     color : white;
@@ -89,7 +89,7 @@ button:not(:disabled), [type=button]:not(:disabled), [type=reset]:not(:disabled)
 
 }
 #dropdown-1, #dropdown-2 {
-    font-size : 8px;
+    font-size : 10px;
     border : none;
     outline : none;
     color : white;
@@ -121,7 +121,7 @@ button:not(:disabled), [type=button]:not(:disabled), [type=reset]:not(:disabled)
 
 
 .btn-group > .btn, .btn-group-vertical > .btn{
-    font-size : 8px;
+    font-size : 10px;
     border : none;
     outline : none;
     color : white;
@@ -129,7 +129,7 @@ button:not(:disabled), [type=button]:not(:disabled), [type=reset]:not(:disabled)
     border : 1px solid black;
 }
 .dropdown-item {
-  font-size : 8px;
+  font-size : 10px;
     border : none;
     outline : none;
 

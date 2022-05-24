@@ -7,8 +7,8 @@
             
             <div class="row g-0 p-0  d-flex align-items-baseline">
                 <p class="parameter-label col-6 ps-3 " >Columns</p>
-                    <div class="dropdown ps-3 col-6 " style="transform: translate(-16px,0);">
-  <button class="btn btn-secondary dropdown-toggle w-100" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div class="dropdown ps-3 col-6 " >
+  <button class="btn btn-secondary dropdown-toggle w-100" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="font-size : 12px !important;">
     {{columnNumber}}
   </button>
   <ul class="dropdown-menu " aria-labelledby="dropdownMenuButton1">
@@ -26,7 +26,7 @@
 
             <div class="row g-0 p-0 d-flex align-items-baseline " >
                 <p class="parameter-label col-6 ps-3">Background</p>
-                <div class="d-flex  justify-content-between col-6 align-items-center" >
+                <div class="d-flex  justify-content-between col-6 align-items-center ms-3" style="width :fit-content;" >
                     <div class="image-upload">
                         <label for="BackGroundFile">
 
@@ -35,9 +35,9 @@
   <path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/>
 </svg>
                         </label>
-                        <input class="form-control" type="file" accept="image/*" id="BackGroundFile" @change="uploadImg">
+                        <input class="form-control " type="file" accept="image/*" id="BackGroundFile" @change="uploadImg">
                     </div>
-                    <input type="color" class="form-control form-control-color border-0" id="exampleColorInput" value="#FFFFFF" @change="changeBackground" style="background: #3e3e46" title="Choose your color">
+                    <input type="color" class="form-control form-control-color border-0 ms-4" id="exampleColorInput" value="#FFFFFF" @change="changeBackground" style="background: #3e3e46" title="Choose your color">
                     <div></div>
                 </div>
             </div>
@@ -114,10 +114,7 @@ export default {
 </script>
 
 <style scoped>
-.parameters{
-    display: flex;
-    align-items: baseline;
-}
+
 .bgdark{
     background: #2b2b33 !important;
     color : white !important;
@@ -157,7 +154,7 @@ button:not(:disabled), [type=button]:not(:disabled), [type=reset]:not(:disabled)
     border : 1px solid black;
 }
 .dropdown-item {
-  font-size : 8px;
+  font-size : 10px;
     border : none;
     outline : none;
 }
