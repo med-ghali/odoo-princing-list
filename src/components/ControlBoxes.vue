@@ -12,13 +12,13 @@
     {{columnNumber}}
   </button>
   <ul class="dropdown-menu " aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" href="#" @click="ListNum(0)"  >None</a></li>
-            <li><a class="dropdown-item" href="#"  @click="ListNum(1)" >&nbsp;1 </a></li>
-            <li><a class="dropdown-item" href="#" @click="ListNum(2)">&nbsp;2 </a></li>
-            <li><a class="dropdown-item" href="#" @click="ListNum(3)">&nbsp;3 </a></li>
-            <li><a class="dropdown-item" href="#" @click="ListNum(4)">&nbsp;4 </a></li>
-            <li><a class="dropdown-item" href="#" @click="ListNum(5)">&nbsp;5 </a></li>
-            <li><a class="dropdown-item" href="#" @click="ListNum(6)">&nbsp;6 </a></li>
+            <li><a class="dropdown-item" :class="{bgdark:columnNumber===0}" href="#" @click="ListNum(0)"  >None</a></li>
+            <li><a class="dropdown-item" :class="{bgdark:columnNumber===1}"  href="#"  @click="ListNum(1)" >&nbsp;1 </a></li>
+            <li><a class="dropdown-item" :class="{bgdark:columnNumber===2}"  href="#" @click="ListNum(2)">&nbsp;2 </a></li>
+            <li><a class="dropdown-item" :class="{bgdark:columnNumber===3}"  href="#" @click="ListNum(3)">&nbsp;3 </a></li>
+            <li><a class="dropdown-item" :class="{bgdark:columnNumber===4}"  href="#" @click="ListNum(4)">&nbsp;4 </a></li>
+            <li><a class="dropdown-item" :class="{bgdark:columnNumber===5}"  href="#" @click="ListNum(5)">&nbsp;5 </a></li>
+            <li><a class="dropdown-item" :class="{bgdark:columnNumber===6}"  href="#" @click="ListNum(6)">&nbsp;6 </a></li>
   </ul>
 </div>
 
@@ -42,16 +42,23 @@
                 </div>
             </div>
             
-            <div class="row g-0 p-0 ">
-                <p class="parameter-label col-6 ps-3" style="transform: translate(0,5px);">Content Width</p>
+            <div class="row g-0 p-0 d-flex align-items-baseline">
+                <p class="parameter-label col-6 ps-3" >Content Width</p>
                 <div class="btns d-flex col-6">
-                    <button class="btn  " @click="changeCardWidth('small',$event)" @mouseenter="changeCardWidth('small',$event)" @mouseleave="handleMouseLeave">small</button>
-                    <button class="btn " @click="changeCardWidth('medium',$event)"  @mouseenter="changeCardWidth('medium',$event)" @mouseleave="handleMouseLeave">medium</button>
-                    <button class="btn "  @click="changeCardWidth('big',$event)"  @mouseenter="changeCardWidth('big',$event)" @mouseleave="handleMouseLeave">big</button>
+                    <button class="btn  " :class="{bgdark:contentWidth==='small'}"  @click="changeCardWidth('small',$event)" @mouseenter="changeCardWidth('small',$event)" @mouseleave="handleMouseLeave">small</button>
+                    <button class="btn " :class="{bgdark:contentWidth==='medium'}" @click="changeCardWidth('medium',$event)"  @mouseenter="changeCardWidth('medium',$event)" @mouseleave="handleMouseLeave">medium</button>
+                    <button class="btn " :class="{bgdark:contentWidth==='big'}"  @click="changeCardWidth('big',$event)"  @mouseenter="changeCardWidth('big',$event)" @mouseleave="handleMouseLeave">big</button>
                 </div>
             </div>
 
-            
+                        <div class="row g-0 p-0 d-flex align-items-baseline">
+                <p class="parameter-label col-6 ps-3" >Height</p>
+                <div class="btns d-flex col-6">
+                    <button class="btn  " :class="{bgdark:height==='h-auto'}"  @click="changeCardHeight('h-auto')" >auto</button>
+                    <button class="btn " :class="{bgdark:height==='min-vh-75'}" @click="changeCardHeight('min-vh-75')" >50%</button>
+                    <button class="btn " :class="{bgdark:height==='min-vh-100'}"  @click="changeCardHeight('min-vh-100')">100%</button>
+                </div>
+            </div>
 
 
 </div>
@@ -61,10 +68,13 @@
 
 <script>
 export default {
+    props : ['length'],
 
     data(){
         return{
-            columnNumber : 3
+            columnNumber : 3,
+            contentWidth : 'big',
+            height : 'h-auto'
         }
     },
     methods: {
@@ -76,7 +86,12 @@ export default {
             this.$emit('changeBackground',e.target.value)
         },
         changeCardWidth (width,e){
+            if(e.type==='click')   this.contentWidth = width
             this.$emit('changeCardWidth',width,e)
+        },
+        changeCardHeight(height){
+            this.height = height
+            this.$emit('changeCardHeight',height)
         },
         handleMouseLeave(e){
             this.$emit('handleMouseLeave',e)
@@ -89,6 +104,11 @@ export default {
             this.$emit('ListNum',num)
 
         }
+    },
+    watch : {
+        length : function(){
+            this.columnNumber = this.length
+        }
     }
 }
 </script>
@@ -98,7 +118,10 @@ export default {
     display: flex;
     align-items: baseline;
 }
-
+.bgdark{
+    background: #2b2b33 !important;
+    color : white !important;
+}
 button:not(:disabled), [type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled){
     font-size : 8px;
     border : none;

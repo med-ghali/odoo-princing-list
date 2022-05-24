@@ -1,7 +1,7 @@
 <template>
 
 <div class="container-fluid m-0 p-0 d-flex " ref="container" >
-      <div class="ma d-flex justify-content-center align-items-center pricing-cards" id="main" >
+      <div class="ma d-flex justify-content-center align-items-center pricing-cards h-auto" id="main" ref="heightSelector">
           <div id="widthSelector" ref="widthSelector" class="w-100">
         <PrincingCard v-for="box in boxes" :key="box.id" @focus="handleFocus(box.id)" :active="box.active" @handleText="handleText" >
         <svg v-if="box.active" style="cursor:pointer;" @click="deleteBox" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-trash-fill position-absolute top-0 end-50" viewBox="0 0 16 16">
@@ -12,7 +12,7 @@
       </div>
       </div>
       <div  class="hide control " style="overflow-y : auto;" >
-      <ControlBoxes @changeCardWidth="changeCardWidth" @handleMouseLeave="handleMouseLeave"  @ListNum="ListNum" @uploadImgBackground="uploadImgBackground" @changeBackground="changeBackground"></ControlBoxes>
+      <ControlBoxes @changeCardWidth="changeCardWidth" @handleMouseLeave="handleMouseLeave"  @ListNum="ListNum" @uploadImgBackground="uploadImgBackground" @changeBackground="changeBackground" @changeCardHeight="changeCardHeight" :length="boxes.length"></ControlBoxes>
         <ControlText v-if="showControlText" @changeWeight="changeWeight" @changetextColor="changetextColor" @changeTextSize="changeTextSize" @changeFontSize="changeFontSize"></ControlText>
       </div>
 
@@ -94,6 +94,12 @@ export default {
               this.$refs.widthSelector.classList.add(this.previousClass)
           }
           this.hover = false
+      },
+      changeCardHeight(height){
+        const lastClass = this.$refs.heightSelector.classList.value.split(' ').pop()
+        this.$refs.heightSelector.classList.remove(lastClass)
+        this.$refs.heightSelector.classList.add(height)
+
       },
     changeTextSize(cls){
       this.selectedText.style.fontSize = ''

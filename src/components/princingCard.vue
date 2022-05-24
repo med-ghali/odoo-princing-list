@@ -1,5 +1,5 @@
 <template>
-  <div class="card p-0 m-2 w-100" @click="focus" :class="{outsideBorder:active}">
+  <div class="card p-0 m-2 w-100 " @click="focus" :class="{outsideBorder:active}">
         <slot class="trash-icon"></slot>
         <div class="inner-div ">
         <div class="card-header text-center bg-dark p-3">
