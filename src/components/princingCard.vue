@@ -1,5 +1,5 @@
 <template>
-  <div class="card p-0 m-2 w-100 " @click="focus" :class="{outsideBorder:active}">
+  <div class="card p-0 m-2 w-100 " @click="focus" :class="{outsideBorder:active}" ref="borderSelector" style="overflow: hidden;">
         <slot class="trash-icon"></slot>
         <div class="inner-div ">
         <div class="card-header text-center  p-3" style="background : #212529" ref="top">
@@ -24,17 +24,54 @@
 
 <script>
 export default {
-    props : ['active','buttonSize','buttonColor','showButton'],
+    props : ['active','buttonSize','buttonColor','showButton','border','corner','shadow'],
     
     methods : {
 
         focus(){
             this.$emit('focus',{top :this.$refs.top, bottom : this.$refs.bottom})
-            
         },
         handleText(e){
             this.$emit('handleText',e.target)
+        },
+        handleBorder(){
+            const b= this.border.width+"px "+this.border.style+" "+this.border.color
+            this.$refs.borderSelector.style.border = b
+            this.$refs.borderSelector.style.borderRadius = this.border.radius+"px"
+        },
+        handleShadow(){
+            const s = this.shadow.offset.x+"px "+this.shadow.offset.y+"px "+this.shadow.blur+"px "+this.shadow.spread+"px "+this.shadow.color
+            this.$refs.borderSelector.style.boxShadow = s
         }
+    },
+    watch : {
+        'border.width' : function(){
+            this.handleBorder()
+        },
+        'border.radius' : function(){
+            this.handleBorder()
+        },
+        'border.color' : function(){
+            this.handleBorder()
+        },
+        'border.style' : function(){
+            this.handleBorder()
+        },
+        'shadow.color' : function(){
+            this.handleShadow()
+        },
+        'shadow.blur' : function(){
+            this.handleShadow()
+        },
+        'shadow.spread' : function(){
+            this.handleShadow()
+        },
+        'shadow.offset.x' : function(){
+            this.handleShadow()
+        },
+        'shadow.offset.y' : function(){
+            this.handleShadow()
+        },
     }
 }
 </script>
