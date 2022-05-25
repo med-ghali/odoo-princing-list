@@ -13,7 +13,7 @@
       </div>
       <div  class="hide control " style="overflow-y : auto;" >
       <ControlBoxes @changeCardWidth="changeCardWidth" @handleMouseLeave="handleMouseLeave"  @ListNum="ListNum" @uploadImgBackground="uploadImgBackground" @changeBackground="changeBackground" @changeCardHeight="changeCardHeight" :length="boxes.length"></ControlBoxes>
-      <ControlBox v-if="focusOn != null" @changeBoxBackground="changeBoxBackground" @handleCardButton="handleCardButton" @handleBorder="handleBorder" @handleBorderStyle="handleBorderStyle" @handleShadow="handleShadow"></ControlBox>
+      <ControlBox v-if="focusOn != null" @changeBoxBackground="changeBoxBackground" @handleCardButton="handleCardButton" @handleBorder="handleBorder" @handleBorderStyle="handleBorderStyle" :boxes="boxes" :focusOn="focusOn" @handleShadow="handleShadow" @handleShadowBtn="handleShadowBtn"></ControlBox>
       <ControlButton v-if="focusOn != null" @changeButtonSize="changeButtonSize"  @changeButtonColor="changeButtonColor" @toggleOutline="toggleOutline" />
       <ControlText v-if="showControlText" @changeWeight="changeWeight" @changetextColor="changetextColor" @changeTextSize="changeTextSize" @changeFontSize="changeFontSize"></ControlText>
       </div>
@@ -51,8 +51,8 @@ export default {
       boxes : [
         { id : 0 ,active : false,buttonSize : '', buttonColor : 'btn-dark', showButton : true ,shadow : {
         active : false,
-        offset : {x : 0 , y : 8},
-        blur : 16,
+        offset : {x : 0 , y : 0},
+        blur : 0,
         spread : 0,
         color : "#000000"
       },corner : 0,
@@ -64,8 +64,8 @@ export default {
       },},
         { id : 1,active : false, buttonSize : '' , buttonColor : 'btn-dark',showButton : true,shadow : {
         active : false,
-        offset : {x : 0 , y : 8},
-        blur : 16,
+        offset : {x : 0 , y : 0},
+        blur : 0,
         spread : 0,
         color : "#000000"
       },corner : 0,
@@ -77,8 +77,8 @@ export default {
       },},
         {id : 2,active : false , buttonSize : ''  ,buttonColor : 'btn-dark',showButton : true,shadow : {
         active : false,
-        offset : {x : 0 , y : 8},
-        blur : 16,
+        offset : {x : 0 , y : 0},
+        blur : 0,
         spread : 0,
         color : "#000000"
       },corner : 0,
@@ -182,8 +182,8 @@ export default {
         {
           this.boxes.push( { id : this.counter++,active : false,buttonSize : '', buttonColor : 'btn-dark', showButton : true,shadow : {
         active : false,
-        offset : {x : 0 , y : 8},
-        blur : 16,
+        offset : {x : 0 , y : 0},
+        blur : 0,
         spread : 0,
         color : "#000000"
       },corner : 0,
@@ -265,7 +265,19 @@ export default {
             else card.shadow.spread = value
           }
         })
-      }
+      },
+        handleShadowBtn(value){
+        this.boxes.map(box=>{
+          if(box.id===this.focusOn) {
+            box.shadow.active = value
+            box.shadow.offset.x = 0
+            box.shadow.offset.y = 0
+            box.shadow.color = '#000000'
+            box.shadow.spread = 0
+            box.shadow.blur = 0
+          }
+        })
+      },
     
   },
     mounted(){

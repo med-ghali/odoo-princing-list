@@ -60,8 +60,8 @@
                     <div class="row g-0 p-0 align-items-baseline shadow-div">
                 <p class="parameter-label col-6 ps-3" >Shadow</p>
                 <div class="d-flex col-6">
-                    <button class="btn" :class="{focused:!active}" @click="handleShadowBtn">None</button>
-                     <button class="btn" :class="{focused:active}"  @click="handleShadowBtn"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" width="55.832px" height="55.832px" viewBox="0 0 55.832 55.832" style="enable-background:new 0 0 55.832 55.832;" xml:space="preserve"><g><g><g><path d="M9.166,41.832H6.669C2.991,41.832,0,38.84,0,35.163V11.835c0-3.678,2.992-6.669,6.669-6.669h34.328     c3.678,0,6.669,2.992,6.669,6.669v3.164c0,0.552-0.448,1-1,1H14.835c-2.575,0-4.669,2.095-4.669,4.669v20.164     C10.166,41.385,9.718,41.832,9.166,41.832z M6.669,7.166C4.094,7.166,2,9.261,2,11.835v23.328c0,2.575,2.095,4.669,4.669,4.669     h1.497V20.669c0-3.678,2.992-6.669,6.669-6.669h30.831v-2.164c0-2.575-2.096-4.669-4.669-4.669H6.669V7.166z"></path><path d="M49.163,50.666H14.835c-3.678,0-6.669-2.992-6.669-6.669V20.669c0-3.678,2.992-6.669,6.669-6.669h34.328     c3.678,0,6.669,2.992,6.669,6.669v23.328C55.832,47.674,52.84,50.666,49.163,50.666z M14.835,15.999     c-2.575,0-4.669,2.095-4.669,4.669v23.328c0,2.575,2.095,4.669,4.669,4.669h34.328c2.575,0,4.669-2.095,4.669-4.669V20.669     c0-2.575-2.096-4.669-4.669-4.669L14.835,15.999L14.835,15.999z"/></g></g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg></button>
+                    <button class="btn" :class="{focused:!active,bgdark:!active}" @click="handleShadowBtn">None</button>
+                     <button class="btn" :class="{focused:active,bgdark:active}"  @click="handleShadowBtn"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" width="55.832px" height="55.832px" viewBox="0 0 55.832 55.832" style="enable-background:new 0 0 55.832 55.832;" xml:space="preserve"><g><g><g><path d="M9.166,41.832H6.669C2.991,41.832,0,38.84,0,35.163V11.835c0-3.678,2.992-6.669,6.669-6.669h34.328     c3.678,0,6.669,2.992,6.669,6.669v3.164c0,0.552-0.448,1-1,1H14.835c-2.575,0-4.669,2.095-4.669,4.669v20.164     C10.166,41.385,9.718,41.832,9.166,41.832z M6.669,7.166C4.094,7.166,2,9.261,2,11.835v23.328c0,2.575,2.095,4.669,4.669,4.669     h1.497V20.669c0-3.678,2.992-6.669,6.669-6.669h30.831v-2.164c0-2.575-2.096-4.669-4.669-4.669H6.669V7.166z"></path><path d="M49.163,50.666H14.835c-3.678,0-6.669-2.992-6.669-6.669V20.669c0-3.678,2.992-6.669,6.669-6.669h34.328     c3.678,0,6.669,2.992,6.669,6.669v23.328C55.832,47.674,52.84,50.666,49.163,50.666z M14.835,15.999     c-2.575,0-4.669,2.095-4.669,4.669v23.328c0,2.575,2.095,4.669,4.669,4.669h34.328c2.575,0,4.669-2.095,4.669-4.669V20.669     c0-2.575-2.096-4.669-4.669-4.669L14.835,15.999L14.835,15.999z"/></g></g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg></button>
                </div>       
                 </div>
 
@@ -111,7 +111,7 @@
 
 <script>
 export default {
-    props : ['cardData','focusOn'],
+    props : ['boxes','focusOn'],
     data(){
         return{
             width : 0,
@@ -119,9 +119,9 @@ export default {
             color : "#000000",
             active : false,
             spread : 0,
-            blur : 16,
+            blur : 0,
             offsetX : 0,
-            offsetY : 8,
+            offsetY : 0,
             shadowColor : "#000000"
         }
     },
@@ -144,6 +144,8 @@ export default {
         handleShadowBtn(e){
             if(e.target.textContent == 'None'){
             this.active = false
+            this.spread = this.blur = this.offsetX = this.offsetY = 0
+            this.shadowColor = "#000000"
             this.$emit('handleShadowBtn',false)
 
             }
@@ -154,14 +156,13 @@ export default {
             }
         },
         handleShadow(e,option){
-
-this.$emit('handleShadow',e.target.value,option)
+                this.$emit('handleShadow',e.target.value,option)
         }
     },
     watch : {
         focusOn : function()
         {
-                 this.cardData.map(card =>{
+                 this.boxes.map(card =>{
                  if(card.id === this.focusOn){
                 this.active = card.shadow.active
                 this.spread = card.shadow.spread
@@ -183,6 +184,10 @@ this.$emit('handleShadow',e.target.value,option)
 </script>
 
 <style scoped>
+.bgdark{
+    background: #2b2b33 !important;
+    color : white !important;
+}
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;

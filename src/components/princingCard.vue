@@ -1,7 +1,7 @@
 <template>
-  <div class="card p-0 m-2 w-100 " @click="focus" :class="{outsideBorder:active}" ref="borderSelector" style="overflow: hidden;">
+  <div class="card p-0 m-2 w-100 " @click="focus" :class="{outsideBorder:active}"  style="overflow: hidden;">
         <slot class="trash-icon"></slot>
-        <div class="inner-div ">
+        <div class="inner-div " ref="borderSelector">
         <div class="card-header text-center  p-3" style="background : #212529" ref="top">
             <h4  contenteditable="true"  @dblclick="handleText" style="color : white;">Beginner</h4>
         </div>
