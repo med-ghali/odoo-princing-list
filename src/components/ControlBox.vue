@@ -6,7 +6,7 @@
 
         <div class="row g-0 p-0 d-flex align-items-baseline ">
             <p class="parameter-label col-6 ps-3 ">Colors</p>
-    <input type="color" class="form-control form-control-color border-0 ms-4" id="exampleColorInput" value="#FFFFFF" @change="changeBoxBackground" style="background: #3e3e46;transform: translate(-33px, 6px);" title="Choose your color">
+    <input type="color" class="form-control form-control-color border-0 ms-4" id="exampleColorInput"  v-model="bgColor" @change="changeBoxBackground" style="background: #3e3e46;transform: translate(-33px, 6px);" title="Choose your color">
         </div>
         <div class="row g-0 p-0 d-flex align-items-baseline ">
             
@@ -31,7 +31,7 @@
                     <input type="number"  min="0" max="100" v-model="width"  @change="handleBorder($event,'width')"/>
                     <span>px</span>
                 </div>
-                <input type="color" class="form-control form-control-color border-0 m-0" id="exampleColorInput" :value="color" @change="handleBorder($event,'color')" style="background: #3e3e46" title="Choose your color">
+                <input type="color" class="form-control form-control-color border-0 m-0" id="exampleColorInput" v-model="color" @change="handleBorder($event,'color')" style="background: #3e3e46" title="Choose your color">
                 <div>
                      <div class="dropdown ps-3 col-6 " >
                     <button class="btn btn-secondary dropdown-toggle w-100 mt-1" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -69,7 +69,7 @@
 
                              <div class="row g-0 p-0 d-flex ">
                                     <p class="parameter-label col-6 ps-3 " style="transform: translate(0, 10px);">&nbsp;&nbsp;⌙ Color</p>
-            <input @change="handleShadow($event,'color')" type="color" class="form-control form-control-color border-0 m-0" :value="shadowColor" style="background: #3e3e46" title="Choose your color">
+            <input @change="handleShadow($event,'color')" type="color" class="form-control form-control-color border-0 m-0" v-model="shadowColor" style="background: #3e3e46" title="Choose your color">
                                 </div>
 
                                 <div class="row g-0 p-0 d-flex align-items-baseline ">
@@ -115,6 +115,7 @@ export default {
     data(){
         return{
             width : 0,
+            bgColor : "#000000",
             radius : 0,
             color : "#000000",
             active : false,
@@ -162,8 +163,10 @@ export default {
     watch : {
         focusOn : function()
         {
+            console.log(this.focusOn)
                  this.boxes.map(card =>{
                  if(card.id === this.focusOn){
+                this.bgColor = card.bgColor
                 this.active = card.shadow.active
                 this.spread = card.shadow.spread
                 this.blur = card.shadow.blur
@@ -175,6 +178,7 @@ export default {
                 this.width = card.border.width
                 this.radius = card.border.radius
                 this.color = card.border.color
+                return
                 }})
                 
         }

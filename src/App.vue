@@ -49,13 +49,15 @@ export default {
         showControlText : false,
         previousClass : 'w-100',
       boxes : [
-        { id : 0 ,active : false,buttonSize : '', buttonColor : 'btn-dark', showButton : true ,shadow : {
+        { id : 0 ,active : false,buttonSize : '', buttonColor : 'btn-dark', showButton : true ,
+        shadow : {
         active : false,
         offset : {x : 0 , y : 0},
         blur : 0,
         spread : 0,
         color : "#000000"
       },corner : 0,
+        bgColor : "#000000",
       border : {
           width : 0,
           radius : 0,
@@ -69,6 +71,7 @@ export default {
         spread : 0,
         color : "#000000"
       },corner : 0,
+        bgColor : "#000000",
       border : {
           width : 0,
           radius : 0,
@@ -82,6 +85,7 @@ export default {
         spread : 0,
         color : "#000000"
       },corner : 0,
+        bgColor : "#000000",
       border : {
           width : 0,
           radius : 0,
@@ -175,6 +179,8 @@ export default {
     },
     deleteBox(){
      this.boxes = this.boxes.filter(box => box.id != this.focusOn)
+     this.handleFocus(null)
+      this.showControlText = null
     },
     ListNum(num){
       while (num !== this.boxes.length){
@@ -187,6 +193,7 @@ export default {
         spread : 0,
         color : "#000000"
       },corner : 0,
+      bgColor : "#000000",
       border : {
           width : 0,
           radius : 0,
@@ -225,6 +232,12 @@ export default {
       changeBoxBackground(color){
         this.boxInfo.top.style.backgroundColor = color
         this.boxInfo.bottom.style.backgroundColor = color
+        this.boxes.map(box=> {
+          if(box.id === this.focusOn) {
+            box.bgColor = color
+            return
+          }
+        })
 
       },
       handleCardButton(action){
