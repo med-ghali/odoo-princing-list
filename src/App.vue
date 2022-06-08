@@ -3,7 +3,7 @@
 <div class="container-fluid m-0 p-0 d-flex " ref="container" >
       <div class="ma d-flex justify-content-center align-items-center pricing-cards h-auto" id="main" ref="heightSelector">
           <div id="widthSelector" ref="widthSelector" class="w-100">
-        <PrincingCard v-for="box in boxes" :key="box.id" @focus="handleFocus($event,box.id)" :active="box.active" @handleText="handleText" :buttonSize="box.buttonSize" :buttonColor="box.buttonColor" :showButton="box.showButton" :border="box.border" :corner="box.corner"  :shadow="box.shadow" >
+        <PrincingCard v-for="box in options" :key="box.id" @focus="handleFocus($event,box.id)" :active="box.active" @handleText="handleText" :buttonSize="box.buttonSize" :buttonColor="box.buttonColor" :showButton="box.showButton" :border="box.border" :corner="box.corner"  :shadow="box.shadow" >
         <svg v-if="box.active" style="cursor:pointer;" @click="deleteBox" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-trash-fill position-absolute top-0 end-50" viewBox="0 0 16 16">
   <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
 </svg>
@@ -11,27 +11,31 @@
       
       </div>
       </div>
-      <div  class="hide control " style="overflow-y : auto;" >
-      <ControlBoxes @changeCardWidth="changeCardWidth" @handleMouseLeave="handleMouseLeave"  @ListNum="ListNum" @uploadImgBackground="uploadImgBackground" @changeBackground="changeBackground" @changeCardHeight="changeCardHeight" :length="boxes.length"></ControlBoxes>
-      <ControlBox v-if="focusOn != null" @changeBoxBackground="changeBoxBackground" @handleCardButton="handleCardButton" @handleBorder="handleBorder" @handleBorderStyle="handleBorderStyle" :boxes="boxes" :focusOn="focusOn" @handleShadow="handleShadow" @handleShadowBtn="handleShadowBtn"></ControlBox>
+    
+    <boxConfigurator>
+       <ControlBoxes @changeCardWidth="changeCardWidth" @handleMouseLeave="handleMouseLeave"  @ListNum="ListNum" @uploadImgBackground="uploadImgBackground" @changeBackground="changeBackground" @changeCardHeight="changeCardHeight" :length="options.length"></ControlBoxes>
+      <ControlBox v-if="focusOn != null" @changeBoxBackground="changeBoxBackground" @handleCardButton="handleCardButton" @handleBorder="handleBorder" @handleBorderStyle="handleBorderStyle" :options="options" :focusOn="focusOn" @handleShadow="handleShadow" @handleShadowBtn="handleShadowBtn"></ControlBox>
       <ControlButton v-if="focusOn != null" @changeButtonSize="changeButtonSize"  @changeButtonColor="changeButtonColor" @toggleOutline="toggleOutline" />
       <ControlText v-if="showControlText" @changeWeight="changeWeight" @changetextColor="changetextColor" @changeTextSize="changeTextSize" @changeFontSize="changeFontSize"></ControlText>
-      </div>
+    
+    </boxConfigurator>
 
 </div>
 </template>
 
 <script>
 import PrincingCard from './components/princingCard.vue';
-import ControlText from './components/ControlText.vue';
-import ControlBoxes from './components/ControlBoxes.vue';
-import ControlBox from './components/ControlBox.vue';
-import ControlButton from './components/ControlButton.vue';
+import boxConfigurator from './components/boxConfigurator.vue';
+import ControlText from './components/boxComponents/ControlText.vue';
+import ControlBoxes from './components/boxComponents/ControlBoxes.vue';
+import ControlBox from './components/boxComponents/ControlBox.vue';
+import ControlButton from './components/boxComponents/ControlButton.vue';
 
 export default {
   name: 'App',
   components: {
     PrincingCard,
+    boxConfigurator,
     ControlText,
     ControlBoxes,
     ControlButton,
@@ -48,7 +52,7 @@ export default {
         selectedText : null,
         showControlText : false,
         previousClass : 'w-100',
-      boxes : [
+      options : [
         { id : 0 ,active : false,buttonSize : '', buttonColor : 'btn-dark', showButton : true ,
         shadow : {
         active : false,
@@ -98,7 +102,7 @@ export default {
   
   methods : {
     handleActiveBox(id){
-        this.boxes.map(box=>{
+        this.options.map(box=>{
            if(box.id === id) box.active = true
           else box.active = false
         })
@@ -178,15 +182,15 @@ export default {
       document.body.style.background = color
     },
     deleteBox(){
-     this.boxes = this.boxes.filter(box => box.id != this.focusOn)
+     this.options = this.options.filter(box => box.id != this.focusOn)
      this.handleFocus(null)
       this.showControlText = null
     },
     ListNum(num){
-      while (num !== this.boxes.length){
-        if (num > this.boxes.length)
+      while (num !== this.options.length){
+        if (num > this.options.length)
         {
-          this.boxes.push( { id : this.counter++,active : false,buttonSize : '', buttonColor : 'btn-dark', showButton : true,shadow : {
+          this.options.push( { id : this.counter++,active : false,buttonSize : '', buttonColor : 'btn-dark', showButton : true,shadow : {
         active : false,
         offset : {x : 0 , y : 0},
         blur : 0,
@@ -202,22 +206,22 @@ export default {
       },} )
             // is set ??
         }else{
-          this.boxes.pop()
+          this.options.pop()
         }
       }
     },
       changeButtonSize(size){
-        this.boxes.map(box =>{
+        this.options.map(box =>{
           if(box.id === this.focusOn) box.buttonSize = size ;
         }) 
       },
       changeButtonColor(clr){
-        this.boxes.map(box =>{
+        this.options.map(box =>{
           if(box.id === this.focusOn) box.buttonColor = clr ;
         })        
       },
       toggleOutline(){
-        this.boxes.map(box =>{
+        this.options.map(box =>{
           if(box.id === this.focusOn){
             if (!box.buttonColor.includes('outline')){
               const  newColor = 'btn-outline' + box.buttonColor.substring(3, box.buttonColor.length) ;
@@ -232,7 +236,7 @@ export default {
       changeBoxBackground(color){
         this.boxInfo.top.style.backgroundColor = color
         this.boxInfo.bottom.style.backgroundColor = color
-        this.boxes.map(box=> {
+        this.options.map(box=> {
           if(box.id === this.focusOn) {
             box.bgColor = color
             return
@@ -241,7 +245,7 @@ export default {
 
       },
       handleCardButton(action){
-          this.boxes.map(box =>{
+          this.options.map(box =>{
           if(box.id == this.focusOn) {
           if(action === 'del') box.showButton = false
           else box.showButton = true
@@ -250,7 +254,7 @@ export default {
       })
       },
       handleBorder(c,type){
-        this.boxes.map(card => {
+        this.options.map(card => {
           if(card.id === this.focusOn){
                       if(type == 'width')
                       card.border.width = c
@@ -264,12 +268,12 @@ export default {
 
       },
       handleBorderStyle(style){
-        this.boxes.map(card =>{
+        this.options.map(card =>{
           if(card.id === this.focusOn) card.border.style = style
         })
       },
       handleShadow(value,option){
-         this.boxes.map(card=>{
+         this.options.map(card=>{
           if(card.id===this.focusOn) {
             if(option==='x') card.shadow.offset.x = value
             else if(option==='y') card.shadow.offset.y = value
@@ -280,7 +284,7 @@ export default {
         })
       },
         handleShadowBtn(value){
-        this.boxes.map(box=>{
+        this.options.map(box=>{
           if(box.id===this.focusOn) {
             box.shadow.active = value
             box.shadow.offset.x = 0

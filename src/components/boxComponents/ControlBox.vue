@@ -111,7 +111,7 @@
 
 <script>
 export default {
-    props : ['boxes','focusOn'],
+    props : ['options','focusOn'],
     data(){
         return{
             width : 0,
@@ -163,8 +163,9 @@ export default {
     watch : {
         focusOn : function()
         {
-            console.log(this.focusOn)
-                 this.boxes.map(card =>{
+            
+
+                 this.options.map(card =>{
                  if(card.id === this.focusOn){
                 this.bgColor = card.bgColor
                 this.active = card.shadow.active
