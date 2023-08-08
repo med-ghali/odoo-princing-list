@@ -1,3 +1,5 @@
+This is a clone of odoo's CRM princing lists , made with vue.js during an intership
+
 # princing-list
 
 ## Project setup
